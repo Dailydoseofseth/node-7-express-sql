@@ -14,6 +14,7 @@ function App() {
   // STATE VARIABLES
   // ------------------
 
+  // variable & setter FUNC. initial state set to NULL
   const [animals, setAnimals] = useState(null);
 
   // ------------------
@@ -21,10 +22,26 @@ function App() {
   // ------------------
 
   const getAllAnimals = async () => {
+    // we fetch the endpoints we made that gathers the NEON DB Pool
     const response = await fetch("/api/get-all-animals");
+    // await for response from API CALL that is accessing DB & retruning with JS Obj to be STORED into DATA VAR
     const data = await response.json();
     console.log(data);
+    // CALL() the SETTER FUNC with DATA passed in as NEW VALUE
     setAnimals(data);
+  };
+
+  // DELETE ONE ANIMAL (re-home)
+  const deleteOneAnimal = async (id) => {
+    // send POST request to delete the animal
+    const response = await fetch(`api/delete-one-animal/${id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    // fetch all animals again
+    getAllAnimals();
   };
 
   // ------------------
@@ -53,6 +70,10 @@ function App() {
               <p>Category: {animal.category}</p>
               <p>Lives in: {animal.lives_in}</p>
               <p>Can fly: {animal.can_fly ? "True ✅" : "False ❌"}</p>
+              {/* ADD BTN to delete ONE ANIMAL. ADD FUNCTION ABOVE */}
+              <button onClick={() => deleteOneAnimal(animal.id)}>
+                Re-Home
+              </button>
             </div>
           ))}
         </div>
