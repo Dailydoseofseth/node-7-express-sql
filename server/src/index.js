@@ -137,19 +137,28 @@ async function updateOneAnimalCategory(id, newCategory) {
 }
 
 // 11. 🌟 BONUS CHALLENGE — addManyAnimals(animals)
-// an ASYNC FUNCtion being called
-// FUNC name/identifier (addManyAnimals), WHO's JOB is to INSERT MANY ANIMAL RECORDS(obj) INTO the DB via POST
+// 
+// DECLARING an async HELPER function (TO BE CALLED LATER FROM THE API ENDPOINT)
+// FUNC name/identifier (addManyAnimals), WHO's JOB is to INSERT MANY ANIMAL RECORDS(obj) INTO the DB
+// THIS HELPER FUNC IS TYPICALLY CALLED BY A POST ROUTE
 async function addManyAnimals(animals) {
-  // using a FOR OF LOOP to loop/ITERATE through EACH OBJ (animal) of the animals ARRAY OF OBJs 
+  // using a FOR OF LOOP to loop/ITERATE through EACH OBJ (animal) of the animals ARRAY OF OBJs
   for (const animal of animals) {
-    // we are now AWAITing for the QUERY sent to the DB to finish before running this FUNC
-// ---Without AWAIT----
-// the loop would fire off all the queries immediately.
-// ---With AWAIT----
-// the loop waits for one insert to finish before starting the next.
+    // we are now AWAITing for the QUERY sent to the DB to finish before CONTINUING TO THE NEXT ITERATION OF THE LOOP
+    // ---Without AWAIT----
+    // the loop would fire off all the queries immediately.
+    // ---With AWAIT----
+    // the loop waits for one insert to finish before starting the next.
     // This is called sequential execution.
-    await db.query( //.query calls the database's query method
+    await db.query(
+      //.query calls the database's QUERY METHOD -- it'S jobs: send SQL STATEMENT TO PG. wait for PG. RCV the response
+      // This is the SQL query string. Its where we pass in the Columns & VALUES (placeholders)
       "INSERT INTO animals (name, category, can_fly, lives_in) VALUES ($1, $2, $3, $4)",
+      // we are using the spread operator to pass the values of the animal object into the query
+      // REAL VALUES supplied separately. LOL
+
+      // This is an ARRAY LITERAL
+      // It contains the values that replace the placeholders.
       [animal.name, animal.category, animal.can_fly, animal.lives_in],
     );
   }
@@ -168,7 +177,6 @@ app.get("/get-all-animals", async (req, res) => {
   // get result from DB and send it back to the client/FRONTEND
   res.json(animals);
 });
-
 
 // 2. GET /get-one-animal-by-name/:name
 app.get("/get-one-animal-by-name/:name", async (req, res) => {
@@ -208,24 +216,24 @@ app.get("/get-all-mammals", async (req, res) => {
 //inside the arrow function, we are declaring 2 variables for STORING the returned info.
 
 // app.get("/get-animals-by-category/:category", async (req, res) => {
-  // //1st VAR is using dot notation to access the request via the parameters & accessing the category key=value pair
-  //   const category = req.params.category;
-  // //2nd VAR is awaiting the helper function to grab the category column
-  //   const animals = await getAnimalsByCategory(category);
-  // //THEN we console log to ensure correct data is being pulled.
-  //   console.log(animals);
-  // //THEN we RETURN THE correct JSON data from animlas data
-  //   res.json(animals);
+// //1st VAR is using dot notation to access the request via the parameters & accessing the category key=value pair
+//   const category = req.params.category;
+// //2nd VAR is awaiting the helper function to grab the category column
+//   const animals = await getAnimalsByCategory(category);
+// //THEN we console log to ensure correct data is being pulled.
+//   console.log(animals);
+// //THEN we RETURN THE correct JSON data from animlas data
+//   res.json(animals);
 // });
 // --------------------------------------
-  // 6. 🌟 BONUS CHALLENGE — GET /get-animals-by-category/:category
-  app.get("/get-animals-by-category/:category", async (req, res) => {
-    const category = req.params.category;
-    const animals = await getAnimalsByCategory(category);
-    console.log(animals);
-    res.json(animals);
-  });
-  
+// 6. 🌟 BONUS CHALLENGE — GET /get-animals-by-category/:category
+app.get("/get-animals-by-category/:category", async (req, res) => {
+  const category = req.params.category;
+  const animals = await getAnimalsByCategory(category);
+  console.log(animals);
+  res.json(animals);
+});
+
 // 7. POST /delete-one-animal/:id
 app.post("/delete-one-animal/:id", async (req, res) => {
   const id = req.params.id;
