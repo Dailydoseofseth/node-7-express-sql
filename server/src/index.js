@@ -137,7 +137,7 @@ async function updateOneAnimalCategory(id, newCategory) {
 }
 
 // 11. 🌟 BONUS CHALLENGE — addManyAnimals(animals)
-// 
+//
 // DECLARING an async HELPER function (TO BE CALLED LATER FROM THE API ENDPOINT)
 // FUNC name/identifier (addManyAnimals), WHO's JOB is to INSERT MANY ANIMAL RECORDS(obj) INTO the DB
 // THIS HELPER FUNC IS TYPICALLY CALLED BY A POST ROUTE
@@ -154,10 +154,9 @@ async function addManyAnimals(animals) {
       //.query calls the database's QUERY METHOD -- it'S jobs: send SQL STATEMENT TO PG. wait for PG. RCV the response
       // This is the SQL query string. Its where we pass in the Columns & VALUES (placeholders)
       "INSERT INTO animals (name, category, can_fly, lives_in) VALUES ($1, $2, $3, $4)",
-      // we are using the spread operator to pass the values of the animal object into the query
       // REAL VALUES supplied separately. LOL
 
-      // This is an ARRAY LITERAL
+      // This is an ARRAY LITERAL to pass the values of the animal object into the query
       // It contains the values that replace the placeholders.
       [animal.name, animal.category, animal.can_fly, animal.lives_in],
     );
