@@ -1,0 +1,71 @@
+AI's PRODUCTION/SHIPPABLE LEVEL of code VS our MVP-beginner learning style:
+
+LOL. Sheesh. 
+Funny that AI must be heavily prompted to "learn" your style unless you PAY FOR inline suggestion AKA autocomplete stuff...
+
+FOR REMEMBERANCE, REFERENCE, & TO SEE SHIPPABLE CODE (with a baxillion ERROR handlers & logic/operators/etc)--------->
+
+
+--------------------
+-----HELPERS--------
+--------------------
+// 11. 🌟 BONUS CHALLENGE — addManyAnimals(animals)
+// async function addManyAnimals(animals) {
+//   // animals = [{ name, category, can_fly, lives_in }, ...]
+//   // Build a single multi-row INSERT for good performance.
+//   const values = [];
+//   const placeholders = animals
+//     .map((_, i) => {
+//       const baseIndex = i * 4;
+//       return `($${baseIndex + 1}, $${baseIndex + 2}, $${baseIndex + 3}, $${baseIndex + 4})`;
+//     })
+//     .join(", ");
+
+//   for (const animal of animals) {
+//     values.push(animal.name, animal.category, animal.can_fly, animal.lives_in);
+//   }
+
+//   const result = await db.query(
+//     `INSERT INTO animals (name, category, can_fly, lives_in) VALUES ${placeholders} RETURNING *`,
+//     values,
+//   );
+
+//   return result.rows;
+// }
+
+------------------------------------------
+--------------------
+---API ENDPOINTS----
+--------------------
+
+// app.post("/add-many-animals", async (req, res) => {
+//   try {
+//     const { animals } = req.body;
+
+//     if (!Array.isArray(animals) || animals.length === 0) {
+//       return res
+//         .status(400)
+//         .json({ error: "Body must be: { animals: [...] } (non-empty array)" });
+//     }
+
+//     for (const a of animals) {
+//       if (
+//         !a.name ||
+//         !a.category ||
+//         a.can_fly === undefined ||
+//         a.lives_in === undefined
+//       ) {
+//         return res.status(400).json({
+//           error: "Each animal needs: name, category, can_fly, lives_in",
+//         });
+//       }
+//     }
+
+//     const created = await addManyAnimals(animals);
+
+//     res.status(201).json(created);
+//   } catch (err) {
+//     console.error("❌ /add-many-animals error:", err);
+//     res.status(500).json({ error: "Server error" });
+//   }
+// });

@@ -46,6 +46,7 @@ function App() {
         <h2>All Animals</h2>
         <div className="animals">
           {animals?.map((animal) => (
+            // basically the ANIMAL CARD (can use CSS to TARGET IT for style etc)
             <div className="animal" key={animal.id}>
               <h2>{animal.name}</h2>
               <p>Id: {animal.id}</p>

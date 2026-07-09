@@ -1,0 +1,9 @@
+- [x] Implement missing DB helper functions in `server/src/index.js`
+- [x] Implement POST endpoints:
+  - [x] `/delete-one-animal/:id`
+  - [x] `/add-one-animal`
+  - [x] `/update-one-animal-name`
+  - [x] `/update-one-animal-category`
+  - [x] `/add-many-animals`
+- [x] Add basic input validation + try/catch error handling
+- [ ] Run server and sanity-check endpoints
